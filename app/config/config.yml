@@ -4,6 +4,7 @@ imports:
     - { resource: services.yml }
     - { resource: @PKPAuthBundle/Resources/config/config.yml }
     - { resource: @PKPAdminBundle/Resources/config/config.yml }
+    - { resource: @PKPApiBundle/Resources/config/config.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -82,3 +83,12 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+
+services:
+    gedmo.listener.timestampable:
+             class: Gedmo\Timestampable\TimestampableListener
+             tags:
+                 - { name: doctrine.event_subscriber, connection: default }
+             calls:
+                 - [ setAnnotationReader, [ @annotation_reader ] ]

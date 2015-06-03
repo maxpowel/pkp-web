@@ -1,0 +1,30 @@
+services:
+    pkp_admin.admin.post:
+        class: PKP\Bundle\AdminBundle\Admin\PostAdmin
+        arguments: [~, PKP\Bundle\LanPartyBundle\Entity\Post, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: LAN, label: Post}
+
+    pkp_admin.admin.o_auth_client:
+        class: PKP\Bundle\AdminBundle\Admin\OAuthClientAdmin
+        arguments: [~, PKP\Bundle\AuthBundle\Entity\Client, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: OAuth, label: Client}
+
+    pkp_admin.admin.access_token:
+        class: PKP\Bundle\AdminBundle\Admin\AccessTokenAdmin
+        arguments: [~, PKP\Bundle\AuthBundle\Entity\AccessToken, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: OAuth, label: AccessToken}
+
+    pkp_admin.admin.refresh_token:
+        class: PKP\Bundle\AdminBundle\Admin\RefreshTokenAdmin
+        arguments: [~, PKP\Bundle\AuthBundle\Entity\RefreshToken, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: OAuth, label: RefreshToken}
+
+    pkp_admin.admin.auth_code:
+        class: PKP\Bundle\AdminBundle\Admin\AuthCodeAdmin
+        arguments: [~, PKP\Bundle\AuthBundle\Entity\AuthCode, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: OAuth, label: AuthCode}

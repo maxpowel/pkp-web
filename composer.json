@@ -24,7 +24,13 @@
         "sonata-project/doctrine-orm-admin-bundle": "^2.3",
         "sonata-project/easy-extends-bundle": "^2.1",
         "sonata-project/user-bundle": "dev-master",
-        "friendsofsymfony/oauth-server-bundle": "dev-master"
+        "friendsofsymfony/oauth-server-bundle": "dev-master",
+        "gedmo/doctrine-extensions":      "dev-master",
+        "nelmio/api-doc-bundle": "^2.9@dev",
+        "friendsofsymfony/rest-bundle": "^1.6@dev",
+        "jms/serializer": "^0.17.0@dev",
+        "jms/serializer-bundle": "^0.13.0@dev"
+
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

@@ -1,0 +1,2 @@
+fos_rest:
+    disable_csrf_role: ROLE_API
