@@ -1,5 +1,5 @@
 {% extends 'PKPWebBundle::layout.html.twig' %}
-
+{% trans_default_domain 'FOSUserBundle' %}
 {% block body %}
     <style>
         body {
@@ -45,18 +45,32 @@
     </style>
     <div class="container">
 
-        <form class="form-signin">
+
+
+
+        <form class="form-signin" action="{{ path("fos_user_security_check") }}" method="post">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
             <h2 class="form-signin-heading">Please sign in</h2>
-            <label for="inputEmail" class="sr-only">Email address</label>
-            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+            <label for="username" class="sr-only">{{ 'security.login.username'|trans }}</label>
+            <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" class="form-control" placeholder="{{ 'security.login.username'|trans }}" autofocus/>
+
+
+            <label for="inputPassword" class="sr-only">{{ 'security.login.password'|trans }}</label>
+
+            <input type="password" id="password" name="_password" class="form-control" placeholder="{{ 'security.login.password'|trans }}" required />
+            {% if error %}
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <strong>Error:</strong> {{ error|trans }}
+                </div>
+            {% endif %}
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" value="remember-me"> Remember me
+                    <input type="checkbox" id="remember_me" name="_remember_me" value="on" /> {{ 'security.login.remember_me'|trans }}
                 </label>
             </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+            <button type="submit" class="btn btn-lg btn-primary btn-block" id="_submit" name="_submit">{{ 'security.login.submit'|trans }}</button>
         </form>
 
     </div>
