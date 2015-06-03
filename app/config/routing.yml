@@ -1,0 +1,25 @@
+pkp_lan_party:
+    resource: "@PKPLanPartyBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+pkp_admin:
+    resource: "@PKPAdminBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+pkp_admin_routing:
+    resource: "@PKPAdminBundle/Resources/config/admin_routing.yml"
+
+pkp_auth:
+    resource: "@PKPAuthBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+pkp_auth_user_routing:
+    resource: "@PKPAuthBundle/Resources/config/routing.yml"
+
+pkp_web:
+    resource: "@PKPWebBundle/Controller/"
+    type:     annotation
+    prefix:   /

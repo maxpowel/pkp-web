@@ -1,0 +1,42 @@
+sonata_user:
+    security_acl: true
+    manager_type: orm # can be orm or mongodb
+
+# app/config/security.yml
+security:
+    # [...]
+    acl:
+        connection: default
+
+doctrine:
+    orm:
+        entity_managers:
+            default:
+                mappings:
+                    SonataUserBundle: ~
+
+fos_user:
+    db_driver:      orm # can be orm or odm
+    firewall_name:  main
+    user_class:     Application\Sonata\UserBundle\Entity\User
+
+
+    group:
+        group_class:   Application\Sonata\UserBundle\Entity\Group
+        group_manager: sonata.user.orm.group_manager                    # If you're using doctrine orm (use sonata.user.mongodb.user_manager for mongodb)
+
+    service:
+        user_manager: sonata.user.orm.user_manager                      # If you're using doctrine orm (use sonata.user.mongodb.group_manager for mongodb)
+
+
+
+
+
+fos_oauth_server:
+    db_driver: orm       # Driver availables: orm, mongodb, or propel
+    client_class:        PKP\Bundle\AuthBundle\Entity\Client
+    access_token_class:  PKP\Bundle\AuthBundle\Entity\AccessToken
+    refresh_token_class: PKP\Bundle\AuthBundle\Entity\RefreshToken
+    auth_code_class:     PKP\Bundle\AuthBundle\Entity\AuthCode
+    service:
+            user_provider: fos_user.user_manager
