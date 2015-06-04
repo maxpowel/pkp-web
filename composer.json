@@ -29,7 +29,10 @@
         "nelmio/api-doc-bundle": "^2.9@dev",
         "friendsofsymfony/rest-bundle": "^1.6@dev",
         "jms/serializer": "^0.17.0@dev",
-        "jms/serializer-bundle": "^0.13.0@dev"
+        "jms/serializer-bundle": "^0.13.0@dev",
+        "sonata-project/media-bundle": "^2.4@dev",
+        "sonata-project/classification-bundle": "dev-master",
+        "jms/di-extra-bundle": "dev-master"
 
     },
     "require-dev": {

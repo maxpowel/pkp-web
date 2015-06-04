@@ -1,0 +1,7 @@
+users:
+    type:     rest
+    resource: PKP\Bundle\ApiBundle\Controller\UserController
+
+parties:
+    type:     rest
+    resource: PKP\Bundle\ApiBundle\Controller\PartyController

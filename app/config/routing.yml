@@ -1,7 +1,6 @@
 pkp_api:
-    resource: "@PKPApiBundle/Controller/"
-    type:     annotation
-    prefix:   /
+    resource: "@PKPApiBundle/Resources/config/routing.yml"
+    prefix:   /api
 
 pkp_lan_party:
     resource: "@PKPLanPartyBundle/Controller/"
@@ -32,4 +31,13 @@ pkp_web:
 
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
-    prefix:   /api/doc
+    prefix:   /doc
+
+
+gallery:
+    resource: '@SonataMediaBundle/Resources/config/routing/gallery.xml'
+    prefix: /media/gallery
+
+media:
+    resource: '@SonataMediaBundle/Resources/config/routing/media.xml'
+    prefix: /media

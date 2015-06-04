@@ -1,2 +1,10 @@
 fos_rest:
     disable_csrf_role: ROLE_API
+    param_fetcher_listener: true
+    body_listener: true
+    format_listener: true
+    view:
+        view_response_listener: 'force'
+    routing_loader:
+        default_format: json
+

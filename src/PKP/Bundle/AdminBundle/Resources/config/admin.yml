@@ -28,3 +28,9 @@ services:
         arguments: [~, PKP\Bundle\AuthBundle\Entity\AuthCode, SonataAdminBundle:CRUD]
         tags:
             - {name: sonata.admin, manager_type: orm, group: OAuth, label: AuthCode}
+
+    pkp_admin.admin.party:
+        class: PKP\Bundle\AdminBundle\Admin\PartyAdmin
+        arguments: [~, PKP\Bundle\LanPartyBundle\Entity\Party, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: LAN, label: Party}
