@@ -6,8 +6,14 @@ use FOS\RestBundle\View\View;
 use JMS\DiExtraBundle\Annotation as DI;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Routing\ClassResourceInterface;
+use PKP\Bundle\AuthBundle\Form\Model\UserRegister;
+use PKP\Bundle\AuthBundle\Form\UserRegisterType;
+use PKP\Bundle\AuthBundle\Form\UserType;
+use PKP\Bundle\AuthBundle\Form\Model\User;
+use FOS\RestBundle\Controller\FOSRestController as Controller;
+use FOS\RestBundle\Controller\Annotations\Route;
 
-class UserController implements ClassResourceInterface
+class UserController extends Controller implements ClassResourceInterface
 {
 
     /** @DI\Inject("doctrine.orm.entity_manager") */
@@ -17,7 +23,7 @@ class UserController implements ClassResourceInterface
      * Cargar la lista de usuarios
      *
      * @ApiDoc(
-     *  resource=true,
+     *  resource="User",
      *  description="Cargar la lista de usuarios"
      * )
      */
@@ -39,30 +45,98 @@ class UserController implements ClassResourceInterface
      * Actualizar datos del usuario
      *
      * @ApiDoc(
-     *  resource=true,
+     *  resource="User",
      *  description="Actualizar datos del usuario"
      * )
      */
-    public function updateAction(){
-        $view = View::create();
-        $data = array();
-        foreach($this->em->getRepository("ApplicationSonataUserBundle:User")->findAll() as $user){
-            $data[] = array(
-                "id" => $user->getId(),
-                "username" => $user->getUsername()
+    public function putAction(){
+        $form = $this->createForm(new UserType(), new User());
+        $form->submit($this->get('request'));
 
-            );
+
+        if ($form->isValid()) {
+
+            $userModel = $form->getData();
+            $userManager = $this->get('fos_user.user_manager');
+            $user = $this->getUser();
+            if($userModel->username)
+                $user->setUsername($userModel->username);
+
+            if($userModel->firstname)
+                $user->setFirstname($userModel->firstname);
+
+            if($userModel->lastname)
+                $user->setLastname($userModel->lastname);
+
+            if($userModel->email)
+                $user->setEmail($userModel->email);
+
+            if($userModel->password)
+                $user->setPlainPassword($userModel->password);
+
+
+            $userManager->updateUser($user);
+            return $this->view(array("ok" => true));
         }
-        $view->setData($data);
-        return $view;
+
+        return $this->view($form, 400);
     }
 
-    public function getAction($slug)
-    {} // "get_user"      [GET] /users/{slug}
+    /**
+     * Obtener información del  usuario
+     *
+     * @ApiDoc(
+     *  resource="User",
+     *  description="Obtener información del usario"
+     * )
+     */
+    public function getAction(){
+        return $this->view($this->serializeUser($this->getUser()));
+    }
 
-    // ...
-    public function getCommentsAction($slug)
-    {} // "get_user_comments"    [GET] /users/{slug}/comments
 
-    // ...
+    /**
+     * Crear un usuario
+     *
+     * @ApiDoc(
+     *  resource="User",
+     *  description="Crear un usuario"
+     * )
+     * @Route("/user/new")
+     */
+    public function postCreateAction(){
+        $form = $this->createForm(new UserRegisterType(), new UserRegister());
+        $form->submit($this->get('request'));
+
+
+        if ($form->isValid()) {
+
+            $userModel = $form->getData();
+            $userManager = $this->get('fos_user.user_manager');
+            $user = $userManager->createUser();
+            $user->setUsername($userModel->username);
+            $user->setFirstname($userModel->firstname);
+            $user->setLastname($userModel->lastname);
+            $user->setEmail($userModel->email);
+            $user->setPlainPassword($userModel->password);
+            $user->setEnabled(true);
+
+
+            $userManager->updateUser($user);
+            return $this->view(array("ok" => true));
+        }
+
+        return $this->view($form, 400);
+    }
+
+
+    private function serializeUser($user){
+        return array(
+            "id" => $user->getId(),
+            "username" => $user->getUsername(),
+            "firstname" => $user->getFirstname(),
+            "lastname" => $user->getLastname(),
+            "email" => $user->getEmail()
+        );
+    }
 }

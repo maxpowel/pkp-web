@@ -19,7 +19,7 @@ class PartyController extends Controller implements ClassResourceInterface
      * Lista de parties
      *
      * @ApiDoc(
-     *  resource=true,
+     *  resource="Party",
      *  description="Lista de parties"
      * )
      */
@@ -34,7 +34,7 @@ class PartyController extends Controller implements ClassResourceInterface
      * Subscribirse a una party
      *
      * @ApiDoc(
-     *  resource=true,
+     *  resource="Party",
      *  description="Subscribirse a una party"
      * )
      */
@@ -65,7 +65,7 @@ class PartyController extends Controller implements ClassResourceInterface
      * Desapuntarse de una party
      *
      * @ApiDoc(
-     *  resource=true,
+     *  resource="Party",
      *  description="Desapuntarse de una party"
      * )
      */
@@ -94,7 +94,7 @@ class PartyController extends Controller implements ClassResourceInterface
      * Ver si estas subscrito a una party
      *
      * @ApiDoc(
-     *  resource=true,
+     *  resource="Party",
      *  description="Ver si estas subscrito a una party"
      * )
      */

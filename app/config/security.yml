@@ -27,6 +27,12 @@ security:
         #    pattern:    ^/oauth/v2/auth
             # Add your favorite authentication process here
 
+        api_register:
+            pattern:    ^/api/user/new
+            fos_oauth:  true
+            stateless:  true
+            anonymous:  true
+
         api:
             pattern:    ^/api
             fos_oauth:  true
@@ -82,4 +88,6 @@ security:
             # Change these rules to adapt them to your needs
             - { path: ^/admin/, role: [ROLE_ADMIN, ROLE_SONATA_ADMIN] }
             - { path: ^/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/api/user/new, role: IS_AUTHENTICATED_ANONYMOUSLY }
             - { path: ^/api, roles: [ IS_AUTHENTICATED_FULLY ] }
+            - { path: ^/api/user/new, role: IS_AUTHENTICATED_ANONYMOUSLY }

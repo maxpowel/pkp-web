@@ -1,5 +1,5 @@
 fos_rest:
-    disable_csrf_role: ROLE_API
+    disable_csrf_role: ROLE_USER
     param_fetcher_listener: true
     body_listener: true
     format_listener: true
