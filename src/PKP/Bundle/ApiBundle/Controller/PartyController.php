@@ -117,4 +117,43 @@ class PartyController extends Controller implements ClassResourceInterface
         return $view;
     }
 
+    /**
+     * Lista de subscripciones a una party
+     *
+     * @ApiDoc(
+     *  resource="Party",
+     *  description="Lista de subscripciones a una party"
+     * )
+     */
+    public function cgetSubscriptionsAction($partyId){
+        $view = View::create();
+
+        $party = $this->em->getRepository("PKPLanPartyBundle:Party")->find($partyId);
+        if($party) {
+            $query = $this->em->createyQuery("SELECT ps FROM PKPLanPartyBundle:PartySubscription ps JOIN ps.party p JOIN ps.user u JOIN ps.post WHERE p = :party AND ps.accepted = true");
+            $query->setParameter("party", $party);
+            $subs = array();
+            foreach($query->execute() as $sub){
+                $subs[] = $this->serializeSubscription($sub);
+            }
+            $view->setData($subs);
+
+        }else{
+            $view->setData(array("error" => "Party not found"));
+        }
+        return $view;
+    }
+
+    private function serializeSubscription(PartySubscription $subscription){
+        $user = $subscription->getUser();
+        $post = $subscription->getPost();
+        return array(
+            "post" => array("id" => $post->getId(),
+                            "name" => $post->getName
+            ),
+            "ower" => array("id" => $user->getId(),
+                            "username" => $user->getUsername()
+            )
+        );
+    }
 }
