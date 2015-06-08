@@ -8,7 +8,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-class PartyAdmin extends Admin
+class PartySubscriptionAdmin extends Admin
 {
     /**
      * @param DatagridMapper $datagridMapper
@@ -16,11 +16,11 @@ class PartyAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('name')
+            ->add('id')
             ->add('description')
-            ->add('start')
-            ->add('end')
-            ->add('price')
+            ->add('accepted')
+            ->add('updated')
+            ->add('created')
         ;
     }
 
@@ -30,11 +30,9 @@ class PartyAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('name')
+            ->add('id')
             ->add('description')
-            ->add('start')
-            ->add('end')
-            ->add('price')
+            ->add('accepted')
             ->add('updated')
             ->add('created')
             ->add('_action', 'actions', array(
@@ -53,11 +51,11 @@ class PartyAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('name')
+            ->add('id')
             ->add('description')
-            ->add('start')
-            ->add('end')
-            ->add('price')
+            ->add('accepted')
+            ->add('updated')
+            ->add('created')
         ;
     }
 
@@ -67,11 +65,9 @@ class PartyAdmin extends Admin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('name')
+            ->add('id')
             ->add('description')
-            ->add('start')
-            ->add('end')
-            ->add('price')
+            ->add('accepted')
             ->add('updated')
             ->add('created')
         ;

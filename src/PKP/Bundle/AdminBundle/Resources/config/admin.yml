@@ -34,3 +34,9 @@ services:
         arguments: [~, PKP\Bundle\LanPartyBundle\Entity\Party, SonataAdminBundle:CRUD]
         tags:
             - {name: sonata.admin, manager_type: orm, group: LAN, label: Party}
+
+    pkp_admin.admin.party_subscription:
+        class: PKP\Bundle\AdminBundle\Admin\PartySubscriptionAdmin
+        arguments: [~, PKP\Bundle\LanPartyBundle\Entity\PartySubscription, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: LAN, label: PartySubscription}
