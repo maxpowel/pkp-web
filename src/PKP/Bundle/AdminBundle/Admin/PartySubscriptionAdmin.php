@@ -16,7 +16,9 @@ class PartySubscriptionAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('id')
+            ->add('party')
+            ->add('user')
+            ->add('post')
             ->add('description')
             ->add('accepted')
             ->add('updated')
@@ -30,7 +32,9 @@ class PartySubscriptionAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id')
+            ->add('party')
+            ->add('user')
+            ->add('post')
             ->add('description')
             ->add('accepted')
             ->add('updated')
@@ -51,9 +55,11 @@ class PartySubscriptionAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('id')
+            ->add('party')
+            ->add('user')
+            ->add('post')
             ->add('description')
-            ->add('accepted')
+            ->add('accepted',null, array("required" => false))
             ->add('updated')
             ->add('created')
         ;
@@ -65,7 +71,9 @@ class PartySubscriptionAdmin extends Admin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('id')
+            ->add('party')
+            ->add('user')
+            ->add('post')
             ->add('description')
             ->add('accepted')
             ->add('updated')

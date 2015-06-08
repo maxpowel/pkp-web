@@ -39,6 +39,12 @@ class Post
      */
     protected $updated;
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="PKP\Bundle\LanPartyBundle\Entity\PartySubscription", mappedBy="post")
+     */
+    protected $subscriptions;
+
     /**
      * @param \DateTime $updated
      */
@@ -127,5 +133,7 @@ class Post
 
 
 
-
+    public function __toString(){
+        return $this->getName();
+    }
 }

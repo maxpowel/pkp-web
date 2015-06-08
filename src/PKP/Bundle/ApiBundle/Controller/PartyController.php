@@ -6,6 +6,7 @@ use FOS\RestBundle\View\View;
 use JMS\DiExtraBundle\Annotation as DI;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Routing\ClassResourceInterface;
+use PKP\Bundle\LanPartyBundle\Entity\Party;
 use PKP\Bundle\LanPartyBundle\Entity\PartySubscription;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -130,13 +131,7 @@ class PartyController extends Controller implements ClassResourceInterface
 
         $party = $this->em->getRepository("PKPLanPartyBundle:Party")->find($partyId);
         if($party) {
-            $query = $this->em->createyQuery("SELECT ps FROM PKPLanPartyBundle:PartySubscription ps JOIN ps.party p JOIN ps.user u JOIN ps.post WHERE p = :party AND ps.accepted = true");
-            $query->setParameter("party", $party);
-            $subs = array();
-            foreach($query->execute() as $sub){
-                $subs[] = $this->serializeSubscription($sub);
-            }
-            $view->setData($subs);
+            $view->setData($this->getPartySubscriptions($party));
 
         }else{
             $view->setData(array("error" => "Party not found"));
@@ -144,16 +139,29 @@ class PartyController extends Controller implements ClassResourceInterface
         return $view;
     }
 
-    private function serializeSubscription(PartySubscription $subscription){
-        $user = $subscription->getUser();
-        $post = $subscription->getPost();
-        return array(
-            "post" => array("id" => $post->getId(),
-                            "name" => $post->getName
-            ),
-            "ower" => array("id" => $user->getId(),
-                            "username" => $user->getUsername()
-            )
-        );
+
+    private function getPartySubscriptions(Party $party){
+        $query = $this->em->createQuery("SELECT p.id as post_id, p.name as post_name, u.id as user_id, u.username as username FROM PKPLanPartyBundle:Post p LEFT JOIN p.subscriptions s LEFT JOIN s.user u LEFT JOIN s.party pa WHERE pa = :party or pa is null");
+        $query->setParameter("party", $party);
+        $subs = array();
+        foreach($query->execute() as $sub){
+            //$subs[] = $this->serializeSubscription($sub);
+
+            $owner = null;
+            if(isset($sub['user_id'])){
+                $owner = array("id" => $sub['user_id'],
+                    "username" => $sub['username']
+                );
+            }
+            $subs[] = array(
+                "post" => array("id" => $sub['post_id'],
+                    "name" => $sub['post_name']
+                ),
+                "ower" => $owner
+            );
+        }
+        return $subs;
+
     }
+
 }
