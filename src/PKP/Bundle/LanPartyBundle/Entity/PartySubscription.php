@@ -9,7 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
- * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(name="party_subs", columns={"user_id","party_id"})})
+ * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(name="party_subs", columns={"user_id","party_id"}), @ORM\UniqueConstraint(name="party_subs_post", columns={"post_id","party_id"})})
  */
 
 class PartySubscription

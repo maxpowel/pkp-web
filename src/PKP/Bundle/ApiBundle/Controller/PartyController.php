@@ -63,6 +63,43 @@ class PartyController extends Controller implements ClassResourceInterface
     }
 
     /**
+     * Subscribirse a una party y un puesto
+     * EN UN FUTURO DESAPARECERA
+     *
+     * @ApiDoc(
+     *  resource="Party",
+     *  description="Subscribirse a una party y un puesto"
+     * )
+     */
+    public function postPostSubscriptionAction($partyId, $postId){
+        $view = View::create();
+
+        $party = $this->em->getRepository("PKPLanPartyBundle:Party")->find($partyId);
+        $post = $this->em->getRepository("PKPLanPartyBundle:Party")->find($postId);
+        if($party) {
+            if($post){
+                $subs = new PartySubscription();
+                $subs->setUser($this->getUser());
+                $subs->setPost($post);
+                $subs->setParty($party);
+                $subs->setAccepted(true);
+                $this->em->persist($subs);
+                try {
+                    $this->em->flush();
+                    $view->setData($this->getSubscriptionAction($party));
+                }catch(\Exception $e){
+                    $view->setData(array("error" => "Ya estas subscrito"));
+                }
+            }else $view->setData(array("error" => "Post not found"));
+
+
+        }else{
+            $view->setData(array("error" => "Party not found"));
+        }
+        return $view;
+    }
+
+    /**
      * Desapuntarse de una party
      *
      * @ApiDoc(
