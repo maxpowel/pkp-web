@@ -18,6 +18,7 @@ class PostAdmin extends Admin
         $datagridMapper
             ->add('id')
             ->add('name')
+            ->add('available')
             ->add('updated')
         ;
     }
@@ -28,8 +29,8 @@ class PostAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('user')
             ->add('name')
+            ->add('available')
             ->add('updated')
             ->add('_action', 'actions', array(
                 'actions' => array(
@@ -47,8 +48,8 @@ class PostAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('user')
             ->add('name')
+            ->add('available')
         ;
     }
 
@@ -58,8 +59,8 @@ class PostAdmin extends Admin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('user')
             ->add('name')
+            ->add('available')
             ->add('updated')
         ;
     }

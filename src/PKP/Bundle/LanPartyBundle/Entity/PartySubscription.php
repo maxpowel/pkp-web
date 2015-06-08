@@ -42,6 +42,11 @@ class PartySubscription
     protected $party;
 
     /**
+     * @ORM\ManyToOne(targetEntity="PKP\Bundle\LanPartyBundle\Entity\Post")
+     */
+    protected $post;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     protected $accepted = false;
@@ -189,6 +194,22 @@ class PartySubscription
     public function setCreated($created)
     {
         $this->created = $created;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPost()
+    {
+        return $this->post;
+    }
+
+    /**
+     * @param mixed $post
+     */
+    public function setPost($post)
+    {
+        $this->post = $post;
     }
 
 

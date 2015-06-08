@@ -27,9 +27,9 @@ class Post
     protected $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User")
+     * @ORM\Column(type="boolean")
      */
-    protected $user;
+    protected $available = true;
 
     /**
      * @var \DateTime $updated
@@ -103,6 +103,29 @@ class Post
     {
         $this->user = $user;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getAvailable()
+    {
+        return $this->available;
+    }
+
+    public function isAvailable()
+    {
+        return $this->available;
+    }
+
+    /**
+     * @param mixed $available
+     */
+    public function setAvailable($available)
+    {
+        $this->available = $available;
+    }
+
+
 
 
 }
