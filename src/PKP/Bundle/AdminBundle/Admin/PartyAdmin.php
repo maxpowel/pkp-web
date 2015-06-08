@@ -20,6 +20,7 @@ class PartyAdmin extends Admin
             ->add('description')
             ->add('start')
             ->add('end')
+            ->add('available')
             ->add('price')
         ;
     }
@@ -34,6 +35,7 @@ class PartyAdmin extends Admin
             ->add('description')
             ->add('start')
             ->add('end')
+            ->add('available')
             ->add('price')
             ->add('updated')
             ->add('created')
@@ -57,6 +59,7 @@ class PartyAdmin extends Admin
             ->add('description')
             ->add('start')
             ->add('end')
+            ->add('available')
             ->add('price')
         ;
     }
@@ -71,6 +74,7 @@ class PartyAdmin extends Admin
             ->add('description')
             ->add('start')
             ->add('end')
+            ->add('available')
             ->add('price')
             ->add('updated')
             ->add('created')

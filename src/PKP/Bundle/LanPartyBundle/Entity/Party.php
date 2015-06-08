@@ -26,6 +26,11 @@ class Party
     protected $name;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $available;
+
+    /**
      * @ORM\Column(type="string")
      */
     protected $description;
@@ -192,6 +197,27 @@ class Party
     public function setCreated($created)
     {
         $this->created = $created;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAvailable()
+    {
+        return $this->available;
+    }
+
+    public function isAvailable()
+    {
+        return $this->available;
+    }
+
+    /**
+     * @param mixed $available
+     */
+    public function setAvailable($available)
+    {
+        $this->available = $available;
     }
 
 
