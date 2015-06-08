@@ -157,7 +157,7 @@ class PartyController extends Controller implements ClassResourceInterface
                 "post" => array("id" => $sub['post_id'],
                     "name" => $sub['post_name']
                 ),
-                "ower" => $owner
+                "owner" => $owner
             );
         }
         return $subs;
