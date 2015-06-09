@@ -91,7 +91,7 @@ class PartyController extends Controller implements ClassResourceInterface
 
                 try {
                     $this->em->flush();
-                    $view->setData($this->getSubscriptionAction($party));
+                    $view->setData($this->getPartySubscriptionAction($party));
                 }catch(\Exception $e){
                     $view->setData(array("error" => "Ya estas subscrito"));
                 }
