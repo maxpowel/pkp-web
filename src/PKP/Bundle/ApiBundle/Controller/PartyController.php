@@ -78,7 +78,7 @@ class PartyController extends Controller implements ClassResourceInterface
         $post = $this->em->getRepository("PKPLanPartyBundle:Post")->find($postId);
         if($party) {
             if($post){
-                $subs = $this->em->getRepository("PKPLanPartyBundle:PartySubscription")->findBy(array("user" => $this->getUser(), "party" => $party));
+                $subs = $this->em->getRepository("PKPLanPartyBundle:PartySubscription")->findOneBy(array("user" => $this->getUser(), "party" => $party));
                 if(!$subs){
                     $subs = new PartySubscription();
                     $subs->setUser($this->getUser());
