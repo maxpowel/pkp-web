@@ -75,15 +75,20 @@ class PartyController extends Controller implements ClassResourceInterface
         $view = View::create();
 
         $party = $this->em->getRepository("PKPLanPartyBundle:Party")->find($partyId);
-        $post = $this->em->getRepository("PKPLanPartyBundle:Party")->find($postId);
+        $post = $this->em->getRepository("PKPLanPartyBundle:Post")->find($postId);
         if($party) {
             if($post){
-                $subs = new PartySubscription();
-                $subs->setUser($this->getUser());
+                $subs = $this->em->getRepository("PKPLanPartyBundle:PartySubscription")->findBy(array("user" => $this->getUser(), "party" => $party));
+                if(!$subs){
+                    $subs = new PartySubscription();
+                    $subs->setUser($this->getUser());
+                    $subs->setParty($party);
+                    $subs->setAccepted(true);
+                    $this->em->persist($subs);
+                }
+
                 $subs->setPost($post);
-                $subs->setParty($party);
-                $subs->setAccepted(true);
-                $this->em->persist($subs);
+
                 try {
                     $this->em->flush();
                     $view->setData($this->getSubscriptionAction($party));
