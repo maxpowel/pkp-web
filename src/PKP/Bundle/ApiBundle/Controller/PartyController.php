@@ -26,7 +26,7 @@ class PartyController extends Controller implements ClassResourceInterface
      */
     public function cgetAction(){
         $view = View::create();
-        $data = $this->em->getRepository("PKPLanPartyBundle:Party")->findAll();
+        $data = $this->em->createQuery("SELECT p FROM PKPLanPartyBundle:Party p WHERE p.available = true");
         $view->setData($data);
         return $view;
     }
@@ -183,8 +183,9 @@ class PartyController extends Controller implements ClassResourceInterface
 
 
     private function getPartySubscriptions(Party $party){
-        $query = $this->em->createQuery("SELECT p.id as post_id, p.name as post_name, u.id as user_id, u.username as username FROM PKPLanPartyBundle:Post p LEFT JOIN p.subscriptions s LEFT JOIN s.user u LEFT JOIN s.party pa WHERE pa = :party or pa is null");
+        /*$query = $this->em->createQuery("SELECT p.id as post_id, p.name as post_name, u.id as user_id, u.username as username, pa.id as party_id FROM PKPLanPartyBundle:Post p LEFT JOIN p.subscriptions s LEFT JOIN s.party pa LEFT JOIN s.user u  WHERE pa = :party or pa is null");
         $query->setParameter("party", $party);
+        echo $query->getSQL();
         $subs = array();
         foreach($query->execute() as $sub){
             //$subs[] = $this->serializeSubscription($sub);
@@ -202,8 +203,37 @@ class PartyController extends Controller implements ClassResourceInterface
                 "owner" => $owner
             );
         }
+        */
+
+        //Optimizar esto
+        $subs = array();
+        foreach($this->em->getRepository("PKPLanPartyBundle:Post")->findAll() as $post){
+            $query = $this->em->createQuery("SELECT count(ps.id) as total, ps.id, u.username as username, u.id as user_id FROM PKPLanPartyBundle:PartySubscription ps JOIN ps.user u WHERE ps.party = :party AND ps.post = :post");
+            $query->setParameter("party", $party);
+            $query->setParameter("post", $post);
+            $sub = $query->getSingleResult();
+
+
+            $owner = null;
+            if($sub['total'] > 0){
+                $owner = array("id" => $sub['user_id'],
+                    "username" => $sub['username']
+                );
+            }
+            $subs[] = array(
+                "post" => array("id" => $post->getId(),
+                    "name" => $post->getName()
+                ),
+                "owner" => $owner
+            );
+
+
+        }
+
+
         return $subs;
 
     }
 
 }
+
