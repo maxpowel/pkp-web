@@ -26,7 +26,7 @@ class PartyController extends Controller implements ClassResourceInterface
      */
     public function cgetAction(){
         $view = View::create();
-        $data = $this->em->createQuery("SELECT p FROM PKPLanPartyBundle:Party p WHERE p.available = true");
+        $data = $this->em->createQuery("SELECT p FROM PKPLanPartyBundle:Party p WHERE p.available = true")->execute();
         $view->setData($data);
         return $view;
     }
